@@ -1,0 +1,75 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import pygame
+import time
+
+# Searching for a phrase in a webpage that indicates product is NOT available, eg. "Coming Soon"
+# To search for a phrase that indicates product is available: 
+    # 1.Active string 2
+    # 2.Comment out string 1
+    # DO NOT LEAVE BOTH ACTIVE, CODE WONT WORK
+
+
+url = "_"  # Replace with the actual URL
+phrase_search= "_" # Replace with phrase you're searching for
+
+
+mp3_shiphorn = r"C:\Users\Karam Sandhar\OneDrive\Desktop\Coding stuff\ship-horn-very-close-14642.mp3"
+pygame.mixer.init()
+pygame.mixer.music.load(mp3_shiphorn)
+
+def play_sound(mp3_shiphorn):
+    pygame.mixer.music.play()
+    while pygame.mixer.music.get_busy():
+        pygame.time.Clock().tick(10)
+
+
+# Start WebDriver
+with webdriver.Chrome() as driver:
+    try:
+        # Open the target website
+        driver.get(url)
+        print(f"Monitoring {url} for the '{phrase_search}'...")
+
+# String 1: Search for a phrase that indicates product is NOT available
+        while True: 
+            try:
+                # Wait for up to 10 seconds for the text to appear
+                WebDriverWait(driver, 10).until(
+                    EC.text_to_be_present_in_element((By.TAG_NAME, "body"), phrase_search)
+                )
+                print("Still waiting")
+                print("-------------")
+            except Exception as e:
+                print("BUY NOW GOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOG")
+                play_sound(mp3_shiphorn)
+                break
+            # Wait for 5 second before refreshing
+            time.sleep(5)
+            driver.refresh()
+    finally:
+        print("Finished monitoring the page.")
+
+# String 2: Search for a phrase that indicates product is available
+'''
+        while True: 
+            try:
+                # Wait for up to 10 seconds for the text to appear
+                WebDriverWait(driver, 10).until(
+                    EC.text_to_be_present_in_element((By.TAG_NAME, "body"), phrase_search)
+                )
+                print("BUY NOW GOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOGGOOGGOGOGOGOGOOGOG")
+                play_sound(mp3_shiphorn)
+                break
+            except Exception as e:
+                print("Still waiting")
+                print("-------------")
+            # Wait for 5 second before refreshing
+            time.sleep(5)
+            driver.refresh()
+    finally:
+        print("Finished monitoring the page.")
+'''
+        
