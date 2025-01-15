@@ -16,7 +16,7 @@ url = "_"  # Replace with the actual URL
 phrase_search= "_" # Replace with phrase you're searching for
 
 
-mp3_shiphorn = r"C:\Users\Karam Sandhar\OneDrive\Desktop\Coding stuff\ship-horn-very-close-14642.mp3"
+mp3_shiphorn = "" #Replace with a LOUD MP3
 pygame.mixer.init()
 pygame.mixer.music.load(mp3_shiphorn)
 
